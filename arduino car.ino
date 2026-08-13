@@ -1,13 +1,14 @@
 ///////////////  Pico Robotics RC Car  ///////////////
 
-int IN1 =  5;
-int IN2 = 6;
-int IN3 = 10;
-int IN4 = 11;
+int IN1 = 10;
+int IN2 = 9;
+int IN3 = 8;
+int IN4 = 7;
 
-int B_led = 7;
-int F_led = 8;
-int Horn  = 9;
+int ENA = 5;
+int ENB = 6;
+
+
 int speed= 200;
 
 int car[7] = {5,6,7,8,9,10,11};
