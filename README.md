@@ -116,5 +116,5 @@ This project is an **Arduino-based RC Car** controlled via Serial commands. The 
 
 **M. Shoyab Sadik** – Pico Robotics  
 
-- [LinkedIn Profile](https://www.linkedin.com/in/your-profile/)  
+- [LinkedIn Profile](https://www.linkedin.com/in/shoyabsadik/)  
 - Contact Number: 01575317604  
