@@ -1,162 +1,167 @@
-///////////////  Pico Robotics RC Car  ///////////////
+/////////////// Pico Robotics RC Car ///////////////
 
+// Motor Driver Pins
 int IN1 = 10;
 int IN2 = 9;
 int IN3 = 8;
 int IN4 = 7;
 
+// Motor Speed Control Pins
 int ENA = 5;
 int ENB = 6;
 
-
-int speed= 200;
-
-int car[7] = {5,6,7,8,9,10,11};
-
-int x;
+// Default Motor Speed
+int speed = 200;
 
 char t;
 
 void setup()
 {
-    for(x = 0; x<7; x=x+1)
-    {
-        pinMode(car[x], OUTPUT);
-    }
-    
-    Serial.begin(9600);
+  // Set motor pins as OUTPUT
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+
+  // Set ENA and ENB as OUTPUT
+  pinMode(ENA, OUTPUT);
+  pinMode(ENB, OUTPUT);
+
+  // Start Serial Communication
+  Serial.begin(9600);
 }
 
 void loop()
 {
-    if(Serial.available())
-    {
-        t = Serial.read();
-        Serial.print(t);
-    }
-    
-if(t == 'F') //Forward
-    {
-        analogWrite(IN1, speed);
-        analogWrite(IN2, 0);
-        analogWrite(IN3, 0);
-        analogWrite(IN4, speed);
-    }
-   
-    else if(t == 'B') //Backward
-    {
-        analogWrite(IN1, 0);
-        analogWrite(IN2, speed);
-        analogWrite(IN3, speed);
-        analogWrite(IN4, 0);
-    }
-   
-    else if(t == 'L') //Left
-    {
-        analogWrite(IN1, 0);
-        analogWrite(IN2, speed);
-        analogWrite(IN3, 0);
-        analogWrite(IN4, speed);
-    }
-   
-    else if(t == 'R') //Right
-    {
-        analogWrite(IN1, speed);
-        analogWrite(IN2, 0);
-        analogWrite(IN3, speed);
-        analogWrite(IN4, 0);
-    }
-   
-    else if(t == 'G') //FowardLeft
-    {
-        analogWrite(IN1, 0);
-        analogWrite(IN2, 0);
-        analogWrite(IN3, 0);
-        analogWrite(IN4, speed);
-    }
-   
-    else if(t == 'I') //ForwardRight
-    {
-        analogWrite(IN1, speed);
-        analogWrite(IN2, 0);
-        analogWrite(IN3, 0);
-        analogWrite(IN4, 0);
-    }
-   
-    else if(t == 'H') //BackwardLeft
-    {
-        analogWrite(IN1, 0);
-        analogWrite(IN2, 0);
-        analogWrite(IN3, speed);
-        analogWrite(IN4, 0);
-    }
-   
-    else if(t == 'J') //BackwardRight
-    {
-        analogWrite(IN1, 0);
-        analogWrite(IN2, speed);
-        analogWrite(IN3, 0);
-        analogWrite(IN4, 0);
-    }
+  // Read command from Bluetooth
+  if(Serial.available())
+  {
+    t = Serial.read();
+    Serial.println(t);
+  }
 
+  // ================= FORWARD =================
+  if(t == 'F')
+  {
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, LOW);
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, HIGH);
 
-    
-    else if(t == 'W') //FrontLightON
-    {
-        digitalWrite(F_led, HIGH);
-    }
-    
-    else if(t == 'w') //FrontLightOFF
-    {
-        digitalWrite(F_led, LOW);
-    }
-    
-    else if(t == 'U') //BackLightON
-    {
-        digitalWrite(B_led, HIGH);
-    }
-    
-    else if(t == 'u') //BackLightOFF
-    {
-        digitalWrite(B_led, LOW);
-    }
-    
-    else if(t == 'V') //Horn-ON
-    {
-        digitalWrite(Horn, HIGH);
-    }
-    
-    else if(t == 'v') //Horn-OFF
-    {
-        digitalWrite(Horn, LOW);
-    }
-    
-    else if(t == 'S') //Stop-Motion
-    {
-        analogWrite(IN1, 0);
-        analogWrite(IN2, 0);
-        analogWrite(IN3, 0);
-        analogWrite(IN4, 0);
-    }
+    analogWrite(ENA, speed);
+    analogWrite(ENB, speed);
+  }
 
-/////Speed-Control/////
+  // ================= BACKWARD =================
+  else if(t == 'B')
+  {
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, HIGH);
+    digitalWrite(IN3, HIGH);
+    digitalWrite(IN4, LOW);
 
-    else if(t == '0') {speed = 100;}
-    else if(t == '1') {speed = 120;}
-    else if(t == '2') {speed = 140;}
-    else if(t == '3') {speed = 160;}
-    else if(t == '4') {speed = 180;}
-    else if(t == '5') {speed = 200;}
-    else if(t == '6') {speed = 220;}
-    else if(t == '7') {speed = 230;}
-    else if(t == '8') {speed = 240;}
-    else if(t == '9') {speed = 245;}
-    else if(t == 'q') {speed = 250;}
-    
-    delay(10); 
+    analogWrite(ENA, speed);
+    analogWrite(ENB, speed);
+  }
+
+  // ================= LEFT =================
+  else if(t == 'L')
+  {
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, HIGH);
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, HIGH);
+
+    analogWrite(ENA, speed);
+    analogWrite(ENB, speed);
+  }
+
+  // ================= RIGHT =================
+  else if(t == 'R')
+  {
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, LOW);
+    digitalWrite(IN3, HIGH);
+    digitalWrite(IN4, LOW);
+
+    analogWrite(ENA, speed);
+    analogWrite(ENB, speed);
+  }
+
+  // ============== FORWARD LEFT ===============
+  else if(t == 'G')
+  {
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, LOW);
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, HIGH);
+
+    analogWrite(ENA, speed);
+    analogWrite(ENB, speed);
+  }
+
+  // ============== FORWARD RIGHT ==============
+  else if(t == 'I')
+  {
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, LOW);
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, LOW);
+
+    analogWrite(ENA, speed);
+    analogWrite(ENB, speed);
+  }
+
+  // ============== BACKWARD LEFT ==============
+  else if(t == 'H')
+  {
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, LOW);
+    digitalWrite(IN3, HIGH);
+    digitalWrite(IN4, LOW);
+
+    analogWrite(ENA, speed);
+    analogWrite(ENB, speed);
+  }
+
+  // ============= BACKWARD RIGHT ==============
+  else if(t == 'J')
+  {
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, HIGH);
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, LOW);
+
+    analogWrite(ENA, speed);
+    analogWrite(ENB, speed);
+  }
+
+  // ================= STOP ====================
+  else if(t == 'S')
+  {
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, LOW);
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, LOW);
+
+    analogWrite(ENA, 0);
+    analogWrite(ENB, 0);
+  }
+
+  // ============== SPEED CONTROL ==============
+  // App Slider: 0-9
+
+  else if(t == '0') { speed = 100; }
+  else if(t == '1') { speed = 120; }
+  else if(t == '2') { speed = 140; }
+  else if(t == '3') { speed = 160; }
+  else if(t == '4') { speed = 180; }
+  else if(t == '5') { speed = 200; }
+  else if(t == '6') { speed = 220; }
+  else if(t == '7') { speed = 230; }
+  else if(t == '8') { speed = 240; }
+  else if(t == '9') { speed = 245; }
+
+  // Maximum Speed
+  else if(t == 'q') { speed = 250; }
 }
-
-
-///// Programmed by -
-/////'M. Shoyab Sadik' /////
-
